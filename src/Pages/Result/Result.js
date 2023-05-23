@@ -1,10 +1,26 @@
 import { Button } from "@mui/material";
 import { useEffect } from "react";
 import {  useNavigate } from "react-router";
+import axios from 'axios';
 import "./Result.css";
 
 const Result = ({ name, score }) => {
   const history = useNavigate();
+
+  const submitReport = () => {
+    axios.post('http://localhost:5000/user', {
+      name: name,
+      Score: score,
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+  
+
 
   useEffect(() => {
     if (!name) {
@@ -21,6 +37,7 @@ const Result = ({ name, score }) => {
         size="large"
         style={{ alignSelf: "center", marginTop: 20 }}
         href="/"
+        onClick={submitReport}
       >
         Go to homepage
       </Button>
